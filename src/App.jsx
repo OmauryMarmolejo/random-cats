@@ -15,19 +15,21 @@ export function App() {
         const { fact } = data;
 
         setFact(fact);
+      }, []);
+  });
 
-        const threeFirstWords = fact.split(" ").slice(0, 3).join(" ");
+  useEffect(() => {
+    if (!fact) return;
 
-        fetch(
-          `https://cataas.com/cat/says/${threeFirstWords}?&size=40&json=true`
-        )
-          .then((res) => res.json())
-          .then((response) => {
-            const { url } = response;
-            setImageUrl(url);
-          });
+    const threeFirstWords = fact.split(" ").slice(0, 3).join(" ");
+
+    fetch(`https://cataas.com/cat/says/${threeFirstWords}?&size=40&json=true`)
+      .then((res) => res.json())
+      .then((response) => {
+        const { url } = response;
+        setImageUrl(url);
       });
-  }, []);
+  }, [fact]);
 
   return (
     <main>
